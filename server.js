@@ -32,15 +32,16 @@ app.get('/movies/:id/poster', async (req, res) => {
     }
 
     try {
-        const tmdbData = await searchTmdbMovie(movie);
-        const posterMatch = findPosterMatch(tmdbData, movie);
+        const posterPath = movie.tmdbId
+            ? await fetchPosterPathByTmdbId(movie.tmdbId)
+            : await fetchPosterPathBySearch(movie);
 
-        if (!posterMatch) {
+        if (!posterPath) {
             return res.status(404).json({ error: 'Poster not found.' });
         }
 
         return res.json({
-            posterUrl: buildPosterUrl(posterMatch.poster_path)
+            posterUrl: buildPosterUrl(posterPath)
         });
     } catch (error) {
         if (error.message === 'TMDB_REQUEST_FAILED') {
@@ -88,7 +89,7 @@ function findMovieById(movieId) {
     return movies.movies.find(entry => entry.id === movieId);
 }
 
-async function searchTmdbMovie(movie) {
+async function fetchPosterPathBySearch(movie) {
     const searchQueries = getTmdbSearchQueries(movie);
 
     for (const query of searchQueries) {
@@ -116,11 +117,31 @@ async function searchTmdbMovie(movie) {
         const bestMatch = findPosterMatch(tmdbData, movie);
 
         if (bestMatch) {
-            return tmdbData;
+            return bestMatch.poster_path;
         }
     }
 
-    return { results: [] };
+    return null;
+}
+
+async function fetchPosterPathByTmdbId(tmdbId) {
+    const tmdbResponse = await fetch(
+        `https://api.themoviedb.org/3/movie/${tmdbId}`,
+        {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${TMDB_API_KEY}`
+            }
+        }
+    );
+
+    if (!tmdbResponse.ok) {
+        throw new Error('TMDB_REQUEST_FAILED');
+    }
+
+    const tmdbData = await tmdbResponse.json();
+
+    return tmdbData.poster_path || null;
 }
 
 function findPosterMatch(tmdbData, movie) {
