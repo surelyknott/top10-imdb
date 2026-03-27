@@ -89,27 +89,37 @@ function findMovieById(movieId) {
 }
 
 async function searchTmdbMovie(movie) {
-    const searchParams = new URLSearchParams({
-        query: movie.title,
-        include_adult: 'false',
-        year: String(movie.year)
-    });
+    const searchQueries = getTmdbSearchQueries(movie);
 
-    const tmdbResponse = await fetch(
-        `https://api.themoviedb.org/3/search/movie?${searchParams.toString()}`,
-        {
-            headers: {
-                accept: 'application/json',
-                Authorization: `Bearer ${TMDB_API_KEY}`
+    for (const query of searchQueries) {
+        const searchParams = new URLSearchParams({
+            query,
+            include_adult: 'false',
+            year: String(movie.year)
+        });
+
+        const tmdbResponse = await fetch(
+            `https://api.themoviedb.org/3/search/movie?${searchParams.toString()}`,
+            {
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Bearer ${TMDB_API_KEY}`
+                }
             }
-        }
-    );
+        );
 
-    if (!tmdbResponse.ok) {
-        throw new Error('TMDB_REQUEST_FAILED');
+        if (!tmdbResponse.ok) {
+            throw new Error('TMDB_REQUEST_FAILED');
+        }
+
+        const tmdbData = await tmdbResponse.json();
+
+        if (findPosterMatch(tmdbData)) {
+            return tmdbData;
+        }
     }
 
-    return tmdbResponse.json();
+    return { results: [] };
 }
 
 function findPosterMatch(tmdbData) {
@@ -118,4 +128,12 @@ function findPosterMatch(tmdbData) {
 
 function buildPosterUrl(posterPath) {
     return `https://image.tmdb.org/t/p/w500${posterPath}`;
+}
+
+function getTmdbSearchQueries(movie) {
+    const fallbackQueries = {
+        Se7en: ['Seven']
+    };
+
+    return [movie.title, ...(fallbackQueries[movie.title] || [])];
 }
