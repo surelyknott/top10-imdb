@@ -12,19 +12,44 @@ function normalizeGuess(text) {
 }
 
 function getAcceptedAnswers(title) {
-    const acceptedAnswers = [normalizeGuess(title)];
+    const acceptedAnswers = new Set([normalizeGuess(title)]);
 
     if (title.includes(':')) {
         title.split(':').forEach(part => {
             const normalizedPart = normalizeGuess(part);
 
             if (normalizedPart) {
-                acceptedAnswers.push(normalizedPart);
+                acceptedAnswers.add(normalizedPart);
             }
         });
     }
 
-    return acceptedAnswers;
+    if (title === "The Godfather Part II") {
+        acceptedAnswers.add(normalizeGuess('Godfather 2'));
+        acceptedAnswers.add(normalizeGuess('Godfather Part 2'));
+    }
+
+    if (title === '12 Angry Men') {
+        acceptedAnswers.add(normalizeGuess('Twelve Angry Men'));
+    }
+
+    if (title === "Star Wars: Episode V - The Empire Strikes Back") {
+        acceptedAnswers.add(normalizeGuess('Empire Strikes Back'));
+        acceptedAnswers.add(normalizeGuess('Star Wars 5'));
+        acceptedAnswers.add(normalizeGuess('Episode 5'));
+    }
+
+    if (title === "One Flew Over the Cuckoo's Nest") {
+        acceptedAnswers.add(normalizeGuess("Cuckoo's Nest"));
+        acceptedAnswers.add(normalizeGuess("One Flew Over Cuckoo's Nest"));
+        acceptedAnswers.add(normalizeGuess('One Flew Over the Cuckoos Nest'));
+    }
+
+    if (title === 'Se7en') {
+        acceptedAnswers.add(normalizeGuess('Seven'));
+    }
+
+    return [...acceptedAnswers];
 }
 
 // Fetch movies from the API and build one game row per movie.
