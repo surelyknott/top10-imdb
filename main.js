@@ -139,13 +139,20 @@ fetch('/movies')
                     }
 
                     const posterData = await response.json();
-
-                    posterImage.src = posterData.posterUrl;
-                    posterImage.onload = () => {
+                    const revealPoster = () => {
                         posterImage.hidden = false;
                         posterImage.classList.add('is-visible');
                         posterImage.dataset.loaded = 'true';
                     };
+
+                    posterImage.onload = () => {
+                        revealPoster();
+                    };
+                    posterImage.src = posterData.posterUrl;
+
+                    if (posterImage.complete) {
+                        revealPoster();
+                    }
                 } catch (error) {
                     console.error(error);
                 }
