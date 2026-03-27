@@ -48,6 +48,7 @@ fetch('/movies')
             let hintsUsed = 0;
             let moviePoints = 10;
             let isResolved = false;
+            let statusTimeoutId;
 
             const rankLabel = document.createElement('h2');
             rankLabel.textContent = `#${movie.id}`;
@@ -55,6 +56,7 @@ fetch('/movies')
             const guessInput = document.createElement('input');
             guessInput.type = 'text';
             guessInput.placeholder = 'Type your guess';
+            guessInput.spellcheck = false;
 
             const checkButton = document.createElement('button');
             checkButton.textContent = 'Check';
@@ -79,16 +81,18 @@ fetch('/movies')
                     return;
                 }
 
+                clearTimeout(statusTimeoutId);
                 isResolved = true;
                 completedMovies += 1;
                 guessInput.disabled = true;
                 checkButton.disabled = true;
                 hintButton.disabled = true;
+                statusText.classList.remove('status-floating');
                 statusText.textContent = statusMessage;
 
                 if (completedMovies === data.movies.length) {
                     endMessage.textContent = `Game over. Your final score is ${score}.`;
-                    resetButton.style.display = 'inline-block';
+                    resetButton.style.display = 'block';
                 }
             }
 
@@ -126,7 +130,15 @@ fetch('/movies')
                     finishMovie('Correct!');
                     showPoster();
                 } else {
+                    statusText.classList.add('status-floating');
                     statusText.textContent = 'Incorrect. Try again or use a hint.';
+                    clearTimeout(statusTimeoutId);
+                    statusTimeoutId = setTimeout(() => {
+                        if (!isResolved) {
+                            statusText.classList.remove('status-floating');
+                            statusText.textContent = '';
+                        }
+                    }, 2500);
                 }
             });
 
