@@ -35,14 +35,16 @@ fetch('/movies')
         const scoreDisplay = document.getElementById('score-display');
         const endMessage = document.getElementById('end-message');
         const resetButton = document.getElementById('reset-button');
+        const movieObserver = createMovieObserver();
 
         resetButton.addEventListener('click', () => {
             window.location.reload();
         });
 
-        data.movies.forEach(movie => {
+        data.movies.forEach((movie, index) => {
             const movieItem = document.createElement('div');
             movieItem.classList.add('movie-item');
+            movieItem.style.setProperty('--stagger-index', index);
             const movieControls = document.createElement('div');
             movieControls.classList.add('movie-controls');
             let hintsUsed = 0;
@@ -164,6 +166,31 @@ fetch('/movies')
             movieControls.append(rankLabel, guessInput, checkButton, hintButton, hintText, statusText);
             movieItem.append(movieControls, posterImage);
             gameContainer.appendChild(movieItem);
+            movieObserver.observe(movieItem);
         });
     })
     .catch(error => console.error('Error fetching movies:', error));
+
+function createMovieObserver() {
+    if (!('IntersectionObserver' in window)) {
+        return {
+            observe(element) {
+                element.classList.add('is-visible');
+            }
+        };
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.16,
+        rootMargin: '0px 0px -6% 0px'
+    });
+
+    return observer;
+}
