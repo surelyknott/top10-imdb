@@ -21,7 +21,7 @@ app.get('/movies', (req, res) => {
 
 app.get('/movies/:id/poster', async (req, res) => {
     const movieId = Number(req.params.id);
-    const movie = movies.movies.find(entry => entry.id === movieId);
+    const movie = findMovieById(movieId);
 
     if (!movie) {
         return res.status(404).json({ error: 'Movie not found.' });
@@ -31,38 +31,22 @@ app.get('/movies/:id/poster', async (req, res) => {
         return res.status(500).json({ error: 'TMDB_API_KEY is missing.' });
     }
 
-    const searchParams = new URLSearchParams({
-        query: movie.title,
-        include_adult: 'false',
-        year: String(movie.year)
-    });
-
     try {
-        const tmdbResponse = await fetch(
-            `https://api.themoviedb.org/3/search/movie?${searchParams.toString()}`,
-            {
-                headers: {
-                    accept: 'application/json',
-                    Authorization: `Bearer ${TMDB_API_KEY}`
-                }
-            }
-        );
-
-        if (!tmdbResponse.ok) {
-            return res.status(502).json({ error: 'TMDB request failed.' });
-        }
-
-        const tmdbData = await tmdbResponse.json();
-        const posterMatch = tmdbData.results?.find(result => result.poster_path);
+        const tmdbData = await searchTmdbMovie(movie);
+        const posterMatch = findPosterMatch(tmdbData);
 
         if (!posterMatch) {
             return res.status(404).json({ error: 'Poster not found.' });
         }
 
         return res.json({
-            posterUrl: `https://image.tmdb.org/t/p/w500${posterMatch.poster_path}`
+            posterUrl: buildPosterUrl(posterMatch.poster_path)
         });
     } catch (error) {
+        if (error.message === 'TMDB_REQUEST_FAILED') {
+            return res.status(502).json({ error: 'TMDB request failed.' });
+        }
+
         return res.status(500).json({ error: 'Unable to fetch poster from TMDB.' });
     }
 });
@@ -98,4 +82,40 @@ function loadEnvFile() {
             process.env[key] = value;
         }
     });
+}
+
+function findMovieById(movieId) {
+    return movies.movies.find(entry => entry.id === movieId);
+}
+
+async function searchTmdbMovie(movie) {
+    const searchParams = new URLSearchParams({
+        query: movie.title,
+        include_adult: 'false',
+        year: String(movie.year)
+    });
+
+    const tmdbResponse = await fetch(
+        `https://api.themoviedb.org/3/search/movie?${searchParams.toString()}`,
+        {
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${TMDB_API_KEY}`
+            }
+        }
+    );
+
+    if (!tmdbResponse.ok) {
+        throw new Error('TMDB_REQUEST_FAILED');
+    }
+
+    return tmdbResponse.json();
+}
+
+function findPosterMatch(tmdbData) {
+    return tmdbData.results?.find(result => result.poster_path);
+}
+
+function buildPosterUrl(posterPath) {
+    return `https://image.tmdb.org/t/p/w500${posterPath}`;
 }
