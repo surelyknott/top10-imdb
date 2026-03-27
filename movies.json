@@ -26,14 +26,22 @@
         },
         {
             "id": 4,
-            "title": "Pulp Fiction",
-            "year": 1994,
+            "title": "The Godfather Part II",
+            "year": 1974,
             "genre": "Crime, Drama",
-            "director": "Quentin Tarantino",
-            "quoteHint": "Say what again."
+            "director": "Francis Ford Coppola",
+            "quoteHint": "Keep your friends close, but your enemies closer."
         },
         {
             "id": 5,
+            "title": "12 Angry Men",
+            "year": 1957,
+            "genre": "Crime, Drama",
+            "director": "Sidney Lumet",
+            "quoteHint": "It’s not easy to raise my hand and send a boy off to die without talking about it first."
+        },
+        {
+            "id": 6,
             "title": "The Lord of the Rings: The Return of the King",
             "year": 2003,
             "genre": "Adventure, Fantasy, Action",
@@ -41,7 +49,39 @@
             "quoteHint": "You bow to no one."
         },
         {
-            "id": 6,
+            "id": 7,
+            "title": "Schindler's List",
+            "year": 1993,
+            "genre": "Biography, Drama, History",
+            "director": "Steven Spielberg",
+            "quoteHint": "Whoever saves one life saves the world entire."
+        },
+        {
+            "id": 8,
+            "title": "Pulp Fiction",
+            "year": 1994,
+            "genre": "Crime, Drama",
+            "director": "Quentin Tarantino",
+            "quoteHint": "Say what again."
+        },
+        {
+            "id": 9,
+            "title": "The Lord of the Rings: The Fellowship of the Ring",
+            "year": 2001,
+            "genre": "Adventure, Fantasy, Action",
+            "director": "Peter Jackson",
+            "quoteHint": "Even the smallest person can change the course of the future."
+        },
+        {
+            "id": 10,
+            "title": "The Good, the Bad and the Ugly",
+            "year": 1966,
+            "genre": "Adventure, Western",
+            "director": "Sergio Leone",
+            "quoteHint": "When you have to shoot, shoot. Don’t talk."
+        },
+        {
+            "id": 11,
             "title": "Forrest Gump",
             "year": 1994,
             "genre": "Drama, Romance",
@@ -49,15 +89,15 @@
             "quoteHint": "Life is like a box of chocolates."
         },
         {
-            "id": 7,
-            "title": "Inception",
-            "year": 2010,
-            "genre": "Action, Science Fiction, Adventure",
-            "director": "Christopher Nolan",
-            "quoteHint": "You mustn’t be afraid to dream a little bigger."
+            "id": 12,
+            "title": "The Lord of the Rings: The Two Towers",
+            "year": 2002,
+            "genre": "Adventure, Fantasy, Action",
+            "director": "Peter Jackson",
+            "quoteHint": "There’s some good in this world, Mr. Frodo, and it’s worth fighting for."
         },
         {
-            "id": 8,
+            "id": 13,
             "title": "Fight Club",
             "year": 1999,
             "genre": "Drama",
@@ -65,20 +105,60 @@
             "quoteHint": "This is your life, and it’s ending one minute at a time."
         },
         {
-            "id": 9,
+            "id": 14,
+            "title": "Inception",
+            "year": 2010,
+            "genre": "Action, Science Fiction, Adventure",
+            "director": "Christopher Nolan",
+            "quoteHint": "You mustn’t be afraid to dream a little bigger."
+        },
+        {
+            "id": 15,
+            "title": "Star Wars: Episode V - The Empire Strikes Back",
+            "year": 1980,
+            "genre": "Action, Adventure, Fantasy",
+            "director": "Irvin Kershner",
+            "quoteHint": "I am your father."
+        },
+        {
+            "id": 16,
             "title": "The Matrix",
             "year": 1999,
             "genre": "Action, Science Fiction",
             "director": "Lana Wachowski, Lilly Wachowski",
-            "quoteHint": "There is no spoon."
+            "quoteHint": "Follow the white rabbit."
         },
         {
-            "id": 10,
+            "id": 17,
             "title": "Goodfellas",
             "year": 1990,
             "genre": "Crime, Drama",
             "director": "Martin Scorsese",
             "quoteHint": "Funny how?"
+        },
+        {
+            "id": 18,
+            "title": "Interstellar",
+            "year": 2014,
+            "genre": "Adventure, Drama, Science Fiction",
+            "director": "Christopher Nolan",
+            "quoteHint": "We are such stuff as dreams are made on, and our little life is rounded with a sleep."
+        },
+        {
+            "id": 19,
+            "title": "One Flew Over the Cuckoo's Nest",
+            "year": 1975,
+            "genre": "Drama",
+            "director": "Milos Forman",
+            "quoteHint": "Which one of you nuts has got any guts?"
+        },
+        {
+            "id": 20,
+            "title": "Se7en",
+            "year": 1995,
+            "genre": "Crime, Drama, Mystery",
+            "director": "David Fincher",
+            "quoteHint": "What’s in the box?"
         }
     ]
 }
