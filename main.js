@@ -148,7 +148,7 @@ fetch('/movies')
                 }
             }
 
-            checkButton.addEventListener('click', () => {
+            function checkGuess() {
                 const userGuess = normalizeGuess(guessInput.value);
                 const acceptedAnswers = getAcceptedAnswers(movie.title);
 
@@ -168,6 +168,14 @@ fetch('/movies')
                             statusText.textContent = '';
                         }
                     }, 2500);
+                }
+            }
+
+            checkButton.addEventListener('click', checkGuess);
+
+            guessInput.addEventListener('keydown', event => {
+                if (event.key === 'Enter') {
+                    checkGuess();
                 }
             });
 
