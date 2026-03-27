@@ -74,7 +74,8 @@ h3 {
 #game-info,
 #score-display,
 #end-message,
-#reset-button {
+#reset-button,
+#site-footer {
     max-width: 980px;
     margin-left: auto;
     margin-right: auto;
@@ -325,6 +326,51 @@ h3 {
     display: block;
     margin: 1rem auto 0;
     min-width: 180px;
+}
+
+#site-footer {
+    margin-top: 2.5rem;
+    padding-bottom: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    text-align: center;
+    opacity: 0.85;
+}
+
+#site-footer p {
+    margin: 0 0 0.8rem;
+}
+
+#social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+#social-links a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(215, 162, 73, 0.55);
+    background: rgba(215, 162, 73, 0.12);
+}
+
+#social-links svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }
 
 @media (max-width: 760px) {

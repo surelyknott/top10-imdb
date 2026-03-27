@@ -118,7 +118,7 @@ fetch('/movies')
                 statusText.textContent = statusMessage;
 
                 if (completedMovies === data.movies.length) {
-                    endMessage.textContent = `Game over. Your final score is ${score}.`;
+                    endMessage.textContent = `Congratulations! Your final score is ${score}. Let me know on Discord how you did! SurelyKnott`;
                     resetButton.style.display = 'block';
                 }
             }
