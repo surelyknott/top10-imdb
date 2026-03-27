@@ -105,7 +105,7 @@ h3 {
     border-radius: 18px;
     color: var(--muted);
     text-align: center;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgb(176 176 228 / 9%);
 }
 
 #game-info p {
@@ -400,6 +400,7 @@ h3 {
 @media (max-width: 760px) {
     body {
         padding: 2rem 0.9rem 3rem;
+        background: #091322;
     }
 
     .movie-item {
@@ -422,6 +423,10 @@ h3 {
     .hint-text,
     .status-text {
         text-align: center;
+    }
+
+    .status-text.status-floating {
+        top: 42%;
     }
 
     .poster-image {
