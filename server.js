@@ -33,7 +33,7 @@ app.get('/movies/:id/poster', async (req, res) => {
 
     try {
         const tmdbData = await searchTmdbMovie(movie);
-        const posterMatch = findPosterMatch(tmdbData);
+        const posterMatch = findPosterMatch(tmdbData, movie);
 
         if (!posterMatch) {
             return res.status(404).json({ error: 'Poster not found.' });
@@ -113,8 +113,9 @@ async function searchTmdbMovie(movie) {
         }
 
         const tmdbData = await tmdbResponse.json();
+        const bestMatch = findPosterMatch(tmdbData, movie);
 
-        if (findPosterMatch(tmdbData)) {
+        if (bestMatch) {
             return tmdbData;
         }
     }
@@ -122,8 +123,15 @@ async function searchTmdbMovie(movie) {
     return { results: [] };
 }
 
-function findPosterMatch(tmdbData) {
-    return tmdbData.results?.find(result => result.poster_path);
+function findPosterMatch(tmdbData, movie) {
+    const resultsWithPosters = tmdbData.results?.filter(result => result.poster_path) || [];
+
+    return resultsWithPosters
+        .map(result => ({
+            result,
+            score: getTmdbMatchScore(result, movie)
+        }))
+        .sort((a, b) => b.score - a.score)[0]?.result;
 }
 
 function buildPosterUrl(posterPath) {
@@ -136,4 +144,38 @@ function getTmdbSearchQueries(movie) {
     };
 
     return [movie.title, ...(fallbackQueries[movie.title] || [])];
+}
+
+function getTmdbMatchScore(result, movie) {
+    let score = 0;
+    const normalizedMovieTitle = normalizeMovieTitle(movie.title);
+    const normalizedResultTitle = normalizeMovieTitle(result.title || '');
+    const releaseYear = result.release_date?.slice(0, 4);
+
+    if (normalizedResultTitle === normalizedMovieTitle) {
+        score += 100;
+    }
+
+    if (normalizedResultTitle.includes(normalizedMovieTitle) || normalizedMovieTitle.includes(normalizedResultTitle)) {
+        score += 40;
+    }
+
+    if (releaseYear === String(movie.year)) {
+        score += 30;
+    }
+
+    if (Array.isArray(result.genre_ids) && result.genre_ids.length > 0) {
+        score += 5;
+    }
+
+    return score;
+}
+
+function normalizeMovieTitle(title) {
+    return title
+        .toLowerCase()
+        .replace(/[^\w\s]/g, '')
+        .replace(/\bthe\b/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
 }
