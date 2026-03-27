@@ -346,6 +346,7 @@ h3 {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 #social-links a {
@@ -371,6 +372,29 @@ h3 {
     width: 20px;
     height: 20px;
     fill: currentColor;
+}
+
+#tmdb-attribution {
+    display: grid;
+    justify-items: center;
+    gap: 0.6rem;
+}
+
+#tmdb-attribution a {
+    display: inline-flex;
+}
+
+#tmdb-attribution img {
+    width: 62px;
+    height: auto;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.22));
+}
+
+#tmdb-attribution p {
+    max-width: 520px;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
 }
 
 @media (max-width: 760px) {
