@@ -126,14 +126,10 @@ fetch('/movies')
             async function showPoster() {
                 if (posterImage.dataset.loaded === 'true') {
                     posterImage.hidden = false;
-                    requestAnimationFrame(() => {
-                        posterImage.classList.add('is-visible');
-                    });
                     return;
                 }
 
                 try {
-                    posterImage.classList.remove('is-visible');
                     const response = await fetch(`/movies/${movie.id}/poster`);
 
                     if (!response.ok) {
@@ -141,22 +137,12 @@ fetch('/movies')
                     }
 
                     const posterData = await response.json();
-                    await new Promise((resolve, reject) => {
-                        posterImage.onload = resolve;
-                        posterImage.onerror = reject;
-                        posterImage.src = posterData.posterUrl;
-
-                        if (posterImage.complete) {
-                            resolve();
-                        }
-                    });
-
+                    posterImage.onload = () => {
+                        posterImage.hidden = false;
+                        posterImage.dataset.loaded = 'true';
+                    };
                     posterImage.hidden = false;
-                    posterImage.dataset.loaded = 'true';
-
-                    requestAnimationFrame(() => {
-                        posterImage.classList.add('is-visible');
-                    });
+                    posterImage.src = posterData.posterUrl;
                 } catch (error) {
                     console.error(error);
                 }
