@@ -1,0 +1,16 @@
+.movie-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.movie-controls {
+    flex: 1;
+}
+
+.poster-image {
+    width: 120px;
+    height: auto;
+    border-radius: 0.5rem;
+}

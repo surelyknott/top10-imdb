@@ -1,0 +1,84 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "title": "The Shawshank Redemption",
+            "year": 1994,
+            "genre": "Drama",
+            "director": "Frank Darabont",
+            "quoteHint": "Get busy living, or get busy dying."
+        },
+        {
+            "id": 2,
+            "title": "The Godfather",
+            "year": 1972,
+            "genre": "Crime, Drama",
+            "director": "Francis Ford Coppola",
+            "quoteHint": "I’m going to make him an offer he can’t refuse."
+        },
+        {
+            "id": 3,
+            "title": "The Dark Knight",
+            "year": 2008,
+            "genre": "Action, Crime, Drama",
+            "director": "Christopher Nolan",
+            "quoteHint": "Why so serious?"
+        },
+        {
+            "id": 4,
+            "title": "Pulp Fiction",
+            "year": 1994,
+            "genre": "Crime, Drama",
+            "director": "Quentin Tarantino",
+            "quoteHint": "Say what again."
+        },
+        {
+            "id": 5,
+            "title": "The Lord of the Rings: The Return of the King",
+            "year": 2003,
+            "genre": "Adventure, Fantasy, Action",
+            "director": "Peter Jackson",
+            "quoteHint": "You bow to no one."
+        },
+        {
+            "id": 6,
+            "title": "Forrest Gump",
+            "year": 1994,
+            "genre": "Drama, Romance",
+            "director": "Robert Zemeckis",
+            "quoteHint": "Life is like a box of chocolates."
+        },
+        {
+            "id": 7,
+            "title": "Inception",
+            "year": 2010,
+            "genre": "Action, Science Fiction, Adventure",
+            "director": "Christopher Nolan",
+            "quoteHint": "You mustn’t be afraid to dream a little bigger."
+        },
+        {
+            "id": 8,
+            "title": "Fight Club",
+            "year": 1999,
+            "genre": "Drama",
+            "director": "David Fincher",
+            "quoteHint": "This is your life, and it’s ending one minute at a time."
+        },
+        {
+            "id": 9,
+            "title": "The Matrix",
+            "year": 1999,
+            "genre": "Action, Science Fiction",
+            "director": "Lana Wachowski, Lilly Wachowski",
+            "quoteHint": "There is no spoon."
+        },
+        {
+            "id": 10,
+            "title": "Goodfellas",
+            "year": 1990,
+            "genre": "Crime, Drama",
+            "director": "Martin Scorsese",
+            "quoteHint": "Funny how?"
+        }
+    ]
+}
